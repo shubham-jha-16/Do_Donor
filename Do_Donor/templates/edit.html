@@ -1,0 +1,94 @@
+{% load static %}
+<html>
+  <head>
+   <title>Edit details</title>
+
+  <link rel="stylesheet" href="{% static 'edit_details/editstyle.css' %}">
+      <script>
+         function basic()
+       {
+              var a=document.getElementById("b1");
+              var b=document.getElementById("b2");
+              b.style.display="none";
+              a.style.display="block";
+       }
+        function change()
+       {
+              var a=document.getElementById("b2");
+              var b=document.getElementById("b1");
+              b.style.display="none";
+              a.style.display="block";
+
+       }
+       </script>
+  </head>
+ <body>
+ <nav>
+     <br><br><br><br><br>
+     <ul>
+          <li><a class="active" href="#"  onclick="basic();">Basic Details</a></li>
+          <li><a href="#"  onclick="change();">Change Password</a></li>
+
+     </ul>
+
+ </nav>
+ <!-- basic details -->
+  <div class="login-page" id="b1">
+
+  <div class="form">
+      Hey!! {{username}} &#128522;<br><br>
+   <h2>Basic Details</h2>
+
+    <form class="login-form" method="post" action="basic_edit" onsubmit=" return Validate();">
+        {% csrf_token %}
+        <label style="float: left">Email:</label>
+       <input type="email" placeholder="email" name="email" value="{{email}}" required/>
+        <label style="float: left">Address:</label>
+       <input type="text" placeholder="address" name="address" value="{{address}}" required/>
+        <label style="float: left">Contact no. :</label>
+       <input type="number" id="r6" placeholder="mobile no." name="mobile" value="{{mobile}}" required/>
+
+      <button >save changes</button>
+
+    </form>
+  </div>
+</div>
+ <!--change password -->
+<div class="login-page" id="b2">
+ 
+  <div class="form">
+      Hey!! {{username}} &#128522;<br><br>
+   <h2>Change Password</h2>
+   
+    <form class="login-form" method="post" action="change_password">
+        {% csrf_token %}
+        <label style="float: left">Old Password:</label>
+       <input type="password" placeholder="old password" name="old"  required/>
+        <label style="float: left">New Password:</label>
+       <input type="password" placeholder="new password" name="new" required/>
+       <label style="float: left">Confirm Password:</label>
+       <input type="password" placeholder="confirm password" name="confirm" required/>
+      <button>save changes</button>
+     
+    </form>
+  </div>
+</div>
+ <!-- change password -->
+<div>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+</div>
+ <script>
+
+      function Validate() {
+        var mobile = document.getElementById('r6');
+
+        if (mobile.value.length != 10) {
+            alert("Mobile no. is not valid!!");
+            return false;
+          }
+        }
+  </script>
+</body>
+</html>

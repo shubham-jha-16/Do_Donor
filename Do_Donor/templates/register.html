@@ -1,0 +1,82 @@
+{% load static %}
+<html>
+  <head>
+   <title>Register</title>
+
+  <link rel="stylesheet" href="{% static 'accounts/rstyle.css' %}">
+  </head>
+ <body >
+ <i><h3 style="color:white;">Any help or donation no matter what<br> and how small will be deeply appreciated<br>and is much needed</h3></i>
+<div class="login-page">
+ 
+  <div class="form">
+   <h2>Register</h2>
+   
+    <form class="login-form" action="otp" method="post" onsubmit=" return Validate();">
+        {% csrf_token %}
+	  <input type="text" placeholder="first_name" id="r1" name="first_name" required/>
+      <input type="text" placeholder="last_name" id="r2" name="last_name" required/>
+      <input type="text" placeholder="username" id="r3" name="username" required/>
+      <input type="email" placeholder="email" id="r4" name="email" required/>
+      <input type="text" placeholder="address" id="r5" name="address" required/>
+      <input type="number" placeholder="mobile no." id="r6" name="mobile" required/>
+      <input type="password" placeholder="password" id="r7" name="password" required/>
+      <input type="password" placeholder="confirm password" id="r8" name="confirm password" required/>
+      <button>login</button>
+      <p class="message">Already registered? <a href="login">Login</a></p>
+    </form>
+  </div>
+</div>
+  <div>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+</div>
+</body>
+
+ <script>
+
+      function Validate() {
+	     var c = /^[a-zA-Z]+$/;
+	   var a = document.getElementById("r1").value;
+	   var b = document.getElementById("r2").value;
+	   if(a.match(c))
+	      true ;
+		  else
+		    {
+			  alert("Enter a valid name");
+			  return false ;
+			}
+			 if(b.match(c))
+	      true ;
+		  else
+		    {
+			  alert("Enter a valid name");
+			  return false ;
+			}
+		var username = document.getElementById('r3');
+         if ((username.value.length < 4) || (username.value.length > 15))
+            {
+            alert("username must be 4 to 15 Character");
+            return false;
+            }
+        var mobile = document.getElementById('r6');
+
+        if (mobile.value.length != 10) {
+            alert("Mobile no. is not valid!!");
+            return false;
+          }
+        var password = document.getElementById("r7").value;
+        var confirm_Password = document.getElementById("r8").value;
+        if (password != confirm_Password) {
+            alert("Passwords do not match.");
+            return false;
+        }
+
+
+		alert("good");
+        return true;
+
+    }
+   </script>
+</html>

@@ -1,0 +1,84 @@
+body{
+background: #008B8B ;
+
+
+}
+
+
+.box {
+
+    position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 550px;
+	height: auto;
+	padding: 50px 70px;
+	background: #F8F8FF ;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
+
+
+}
+.b1 {
+		position: relative;
+		left: 20%;
+		top: 25%;
+		transform: translate(-50%,-50%);
+
+
+	  background-color: #4CAF50; /* Green */
+	  border: none;
+	  color: white;
+	  padding: 10px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 4px 2px;
+	  cursor: pointer;
+}
+.b2 {
+		position: relative;
+		left: 30%;
+		top: 25%;
+		transform: translate(-50%,-50%);
+        width: 250px ;
+
+	  background-color: #4CAF50; /* Green */
+	  border: none;
+	  color: white;
+	  padding: 10px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 4px 2px;
+	  cursor: pointer;
+}
+.anchor a {
+
+    position: relative;
+    margin-left: 22% ;
+    color: #fff;
+    text-align:center ;
+    padding: 10px 5px;
+    background: green;
+    border: none;
+	width:auto;
+	outline: none;
+	height: auto;
+	cursor: pointer;
+	border-radius: 5px;
+    font-size: 15px;
+    left: 20%;
+  -o-transition: .3s all ease;
+  transition: .3s all ease;
+  display: inline-block;
+}
+.anchor a:hover
+{
+	background: #FF0000;
+	color: #262626;
+}
+

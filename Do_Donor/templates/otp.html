@@ -1,0 +1,150 @@
+{% load static %}
+<html>
+  <head>
+   <title>verification</title>
+
+  <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+  </head>
+      <style>
+        #resend
+        {
+           display : none;
+        }
+    </style>
+    {% csrf_token %}
+    <script type="text/javascript">
+        function resends()
+        {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function()
+           {
+              if (this.readyState == 4 && this.status == 200)
+              {
+                      document.getElementById("demos").innerHTML = this.responseText;
+              }
+           };
+        xhttp.open("POST", "resend_otp", true);
+        xhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+        xhttp.send();
+
+        document.getElementById("demo").style.display = "inline";
+        document.getElementById("resend").style.display = "none";
+        min= 1; sec =59;
+        time = setInterval(myTimer, 1000);
+        times = setInterval (my, 1000*60) ;
+      }
+
+      function validate()
+      {
+        let otp = document.getElementById("otp").value;
+        if (otp == '{{ request.session.otp }}')
+        {
+               alert(' otp matched ');
+               return true;
+        }
+        else
+        {
+              alert('invalid otp');
+              return false;
+        }
+      }
+    </script>
+ <body>
+<div class="login-page">
+  <div class="form">
+   <h2>Enter OTP!!</h2>
+  
+    <form class="login-form" autocomplete="off" action="otp" onsubmit="return validate()" >
+        {% csrf_token %}
+	   <p>OTP has been sent to your email</p>
+      <input  type="number" placeholder="enter otp"  name="otpno." id="otp" required/>
+        <input type="button" onclick="resends()" value="resend" id="resend">
+          <span id="demo"></span>
+          <p id="demo1"></p>
+          <p id="demos"></p>
+      
+      <button>Submit</button>
+      
+    </form>
+  </div>
+</div>
+   <script>
+    var time = setInterval(myTimer, 1000);
+    var times = setInterval (my, 1000*60) ;
+    var main = setInterval(mainTimer, 1000);
+    var mains = setInterval (mainTimes, 1000*60) ;
+    var a , b ;
+    var min1= 3, sec1 =59;
+    var min= 1, sec =59;
+
+    function myTimer()
+    {
+      if ((min < 10) && (sec < 10) )
+      {
+           a = "0"+min + ":" +  "0"+sec-- ;
+      }
+      else if ((min >= 10) &&( sec < 10) )
+      {
+          a = min + ":" + "0" + sec-- ;
+      }
+      else if ((min < 10) &&(sec >= 10))
+      {
+            a = "0"+min + ":" +  sec-- ;
+      }
+      else
+      {
+        a = min + ":" +  sec-- ;
+      }
+      document.getElementById("demo").innerHTML = "  resend otp in "+ a;
+    }
+
+    function mainTimer()
+    {
+      if ((min1 < 10) && (sec1 < 10) )
+      {
+          b = "0"+min1 + ":" +  "0"+sec1-- ;
+      }
+      else if ((min1 >= 10) &&( sec1 < 10) )
+      {
+        b = min1 + ":" + "0" + sec1-- ;
+      }
+      else if ((min1 < 10) &&(sec1 >= 10))
+      {
+         b = "0"+min1 + ":" +  sec1-- ;
+      }
+      else
+      { b = min1 + ":" +  sec1-- ;}
+      document.getElementById("demo1").innerHTML ="your session will expire in "+ b;
+    }
+
+    function mainTimes()
+    {
+       if(min1 == 0)
+       {
+             clearInterval(main);
+             clearInterval(mains);
+             alert("session expired");
+             window.location = window.history.back();
+        }
+        else {
+         sec1 = 59; min1--;
+        }
+    }
+    function my()
+    {
+        if (min == 0)
+        {
+            clearInterval(time);
+            clearInterval(times);
+            document.getElementById("demo").style.display = "none";
+            document.getElementById("resend").style.display = "inline";
+        }
+        else {
+         sec = 59; min--;
+        }
+    }
+
+  </script>
+
+</body>
+</html>

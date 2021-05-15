@@ -1,0 +1,189 @@
+{% load static %}
+
+<html lang="en">
+<head>
+	<title>Charity</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="{% static '3sectors/images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/main.css' %}">
+<!--===============================================================================================-->
+<script  type="text/javascript" src="{% static '3sectors/cfb.js' %}"> </script>
+<script type="text/javascript">
+        function charity(a)
+        {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function()
+           {
+              if (this.readyState == 4 && this.status == 200)
+              {
+                      var jsonOptions = JSON.parse(xhttp.responseText);
+
+                      var options = '';
+                      options += '<option  value="None"  ></option>' ;
+                      for(var i = 0; i < jsonOptions.name.length; i++)
+                          options += '<option value="'+jsonOptions.name[i]+'"  >Address:&nbsp'+jsonOptions.address[i]+'</option>';
+
+                      document.getElementById('ngo').innerHTML = options;
+              }
+           };
+           xhttp.open("POST", "charity", true);
+           xhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+           xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+           xhttp.send("sectors="+a);
+        }
+</script>
+ 
+</head>
+<body>
+
+
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form" autocomplete="off" action="charity" method="post">
+				{% csrf_token %}
+				<span class="contact100-form-title">
+					Hey !! {{user.username}} &#128522;
+				</span>
+
+				<label class="label-input100" for="first-name">Your email & Phone no. <p  style="color:red" >*</p></label>
+				<div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Type first name">
+					<input id="first-name" class="input100" type="text" name="email" placeholder="email" value="{{user.email}} " disabled >
+					<span class="focus-input100"></span>
+				</div>
+				<div class="wrap-input100 rs2-wrap-input100 validate-input" data-validate="Type last name">
+					<input class="input100" type="text" name="mobile" placeholder="Mobile no." value="{{user.mobile}} " disabled >
+					<span class="focus-input100"></span>
+				</div>
+
+				<label  class="label-input100" for="sector">Sector:<p  style="color:red" >*</p></label>
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+
+					<select class="input100" name="sectors" onchange="charity(this.value)" id="category" >
+
+						<option value="None">Select Sector(optional)</option>
+						<option value="Food">Food</option>
+ 						<option value="Clothes">Clothes</option>
+						<option value="Books">Books</option>
+
+					</select>
+				</div>
+				
+				
+				<label  class="label-input100" for="ngo">Select NGO (opt):</p></label>
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+				<input  list="ngo" class="input100" placeholder="select NGOs" name="ngo" >
+					  <datalist id="ngo" name="ngo" >
+						  <option  value="None"  ></option>
+                        {% for dest in ngo %}
+						  <option value="{{dest.ngo_name}}">Address: {{dest.user.address}}</option>
+						  {% endfor %}
+
+					  </datalist>
+					<p  style="color:green; text-align:center;"> "If you select none, your donation will be given to the NGO who are in need  "</p>
+				</div>
+				
+				
+				
+				
+				<label class="label-input100" for="quantity">Amount(₹)<p  style="color:red" >*</p></label>
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<input id="amount" class="input100" type="text" name="amount" placeholder="enter amount" required />
+					<span id="messages" class="focus-input100" style="color:green"> </span>
+				</div>
+				
+				
+								
+				  
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn" formaction="donation">
+						Proceed
+					</button>
+				</div>
+			</form>
+
+			<div class="contact100-more flex-col-c-m" style="background-image: url('{% static '3sectors/images/bg-01.jpg' %}');">
+			
+			   <h2 style="color:white"> Donate Now </h2></br>
+			    <h3 style="color:red"><b>Stay Home & Stay Safe</b> </h3></br>
+			   </br>
+				<div class="flex-w size1 p-b-47">
+					
+                   <p style="color:white"> These are tough times for everyone,but<br> 
+				                           children connected to streets, in slums,<br> 
+										   children of daily wagers and impoverished <br> 
+										   families are the worst affected. They are <br> 
+										   already living in poverty and are struggling <br> 
+										   for food, basic supplies and hygiene kits.</p>
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							
+						</span>
+
+						<span class="txt2">
+							SCSIT,DAVV ,Indore
+						</span>
+					</div>
+				</div>
+
+				<div class="dis-flex size1 p-b-47">
+					<div class="txt1 p-r-25">
+						<span class="lnr lnr-phone-handset"></span>
+					</div>
+
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							call us
+						</span>
+
+						<span class="txt3" >
+							+91 76075 86862
+						</span>
+					</div>
+				</div>
+
+				<div class="dis-flex size1 p-b-47">
+					<div class="txt1 p-r-25">
+						<span class="lnr lnr-envelope"></span>
+					</div>
+
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							For Any Query
+						</span>
+
+						<span class="txt3">
+							<b>shubhamjha.hunk@gmail.com</b>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+	
+</body>
+</html>

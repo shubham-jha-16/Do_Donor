@@ -1,0 +1,76 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <title>About ngo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800|Sacramento' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <link rel="stylesheet" href="fonts/ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="fonts/fontawesome/css/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+         <section class="section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 element-animate">
+          <div class="col-md-8 text-center">
+            <h2 class="text-uppercase heading mb-4">Our NGO's</h2>
+            <p class="mb-5 lead">“Fear is useless. What is needed is trust. As social innovators we’ve got to be tenacious, gritty, and courageous. We deal with cynicism and rejection, especially when what we’re working on is important. So we can never give up. Ever.”</p>
+            {% if user.is_authenticated %}
+            <p></p>
+            {% else %}
+              <p class="mb-0"><a href="ngo/ngo" class="btn btn-primary">Join us <span class="icon-arrow"></span></a></p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row element-animate">
+          <div class="major-caousel js-carousel-1 owl-carousel" >
+            {% for dest in dests %}
+            <div >
+              <div class="media d-block media-custom text-left" id="s{{dest.id}}" >
+                <a href="adoption-single.html"><img src="{{dest.ngodata.img.url}}" alt="Image Placeholder" class="img-fluid" ></a>
+                <div class="media-body">
+                 <p style="color:black">
+				  NGO name : {{dest.ngodata.ngo_name}} <br>
+				  Address : {{dest.address}}  <br>
+				  Contact no. : {{dest.mobile}} <br>
+				  Email : {{dest.email}} <br>
+				  Sector : {{dest.ngodata.sector}} <br>
+                 </p>
+                </div>
+              </div>
+            </div>
+             {% endfor %}
+
+
+          </div>
+          <!-- END slider -->
+        </div>
+      </div>
+    </section>
+	
+	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+         function function1()
+           {
+             alert('you have been logged out');
+
+           }
+    </script>
+  </body>
+</html>

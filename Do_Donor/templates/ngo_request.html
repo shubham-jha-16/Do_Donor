@@ -1,0 +1,106 @@
+{% load static %}
+<html>
+<head>
+   <title> NGOs Request</title>
+   <link rel="stylesheet" href="{% static 'request/Adminstyle.css' %}">
+</head>
+<body>
+
+  <nav>
+     <br><br><br><br><br>
+     <ul>
+          <li><a class="active" href="#"  onclick="ask();">Ask to Ngo</a></li>
+          <li><a href="#"  onclick="req();">Request to donors</a></li>
+
+     </ul>
+ </nav>
+  <!--  request to ngo -->
+ <div class="loginbox" id="b1">
+	
+   <form action="ask_ngo" method="post">
+       {% csrf_token %} ">
+	<h2>Ask to NGOs</h2>
+	<p>For:</p>
+	<select name="sector" >
+    <option value="">Select your option</option>
+    <option value="Food">Food</option>
+    <option value="Clothes">Clothes</option>
+    <option value="Books">Books</option>
+     </select>
+       <p>Location</p>
+	<input type="text" name="location" id="l1" placeholder="enter the location"><br>
+	<p>City</p>
+	<input type="text" name="city" value="Indore" ><br>
+	
+	    <p>Message.</p>
+		 <textarea  name="msg" rows="8" cols="30" placeholder="enter your msg."></textarea>
+        
+		<input type="submit" name="" value="Send">
+		
+	</form>
+ </div>
+  <div>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+  </div>
+<!--  request to donors -->
+    <div class="loginbox" id="b2">
+
+   <form autocomplete="off" action="request_donor" method="post">
+       {% csrf_token %}
+	<h2>Request to Donors</h2>
+	<p>For:</p>
+	<select name="sector" required>
+    <option value="">Select your option</option>
+    <option value="Food">Food</option>
+    <option value="Clothes">Clothes</option>
+    <option value="Books">Books</option>
+     </select>
+	<p>Location</p>
+	<input type="text" name="location" id="l1" placeholder="enter the location"><br>
+	<p>City</p>
+	<input type="text" name="city" value="Indore" disabled><br>
+	    <p>Message.</p>
+		 <textarea  name="msg" rows="8" cols="30" placeholder="enter your msg."></textarea>
+
+		<input type="submit" name="" value="Send">
+
+	</form>
+</div>
+ <div>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+ </div>
+</body>
+
+
+<script>
+  function Validate() {
+  var match_no = document.getElementById('m1');
+
+  if (match_no.value < 0 || match_no.value > 100) {
+    alert("Match No. is not valid, Please Enter a valid No.");
+    return false;
+  }
+  return true;
+  alert("all perfect")
+   }
+    function ask()
+       {
+              var a=document.getElementById("b1");
+              var b=document.getElementById("b2");
+              b.style.display="none";
+              a.style.display="block";
+       }
+        function req()
+       {
+              var a=document.getElementById("b2");
+              var b=document.getElementById("b1");
+              b.style.display="none";
+              a.style.display="block";
+
+       }
+  </script> 
+</html>

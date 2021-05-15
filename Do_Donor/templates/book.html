@@ -1,0 +1,192 @@
+{% load static %}
+
+<html lang="en">
+<head>
+	<title>Books donate</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static '3sectors/images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static '3sectors/main.css' %}">
+<!--===============================================================================================-->
+<script  type="text/javascript" src="{% static '3sectors/cfb.js' %}"> </script>
+ 
+</head>
+<body>
+
+
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form" autocomplete="off" action="Books" method="post">
+				{% csrf_token %}
+				<span class="contact100-form-title">
+					Hey !! {{request.user.username}} &#128522;
+				</span>
+
+				<label class="label-input100" for="first-name">Your email & Phone no. <p  style="color:red" >*</p></label>
+				<div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Type first name">
+					<input id="first-name" class="input100" type="text" name="email" placeholder="email" value="{{request.user.email}} " >
+					<span class="focus-input100"></span>
+				</div>
+				<div class="wrap-input100 rs2-wrap-input100 validate-input" data-validate="Type last name">
+					<input class="input100" type="text" name="mobile" placeholder="Mobile no." value="{{request.user.mobile}} " disabled>
+					<span class="focus-input100"></span>
+				</div>
+
+				<label class="label-input100" for="address">address <p  style="color:red" >*</p></label>
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<input id="address" class="input100" type="text" name="address" placeholder="enter your address" value="{{request.user.address}}">
+					<span class="focus-input100"></span>
+				</div>
+
+				<label class="label-input100" for="sector">Donate <p  style="color:red" >*</p></label>
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<input id="sector" class="input100" type="text" name="sector" placeholder="Food/Clothes/Books" value="Books" >
+					<span class="focus-input100"></span>
+				</div>
+				<label  class="label-input100" for="category">Select Category:</label>
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+				      <input type="checkbox" id="b1" name="category" value="Academic">
+					  <label for="book"> Academic</label><br>
+					  <input type="checkbox" id="b2" name="category" value="Novel">
+					  <label for="book"> Novel</label><br>
+					  <input type="checkbox" id="b3" name="category" value="Autobiography">
+					  <label for="book"> Autobiography</label><br>
+					  <input type="checkbox" id="b4" name="category" value="other">
+					  <label for="book">other</label>
+				   </select><br/>
+				</div>
+
+
+				<label  class="label-input100" for="sector">Select NGO:<p  style="color:red" >*</p></label>
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+				<input list="ngo" class="input100" placeholder="select NGOs" name="ngo">
+					 <datalist id="ngo" name="ngo" >
+						  <option  value="none"  ></option>
+                        {% for dest in dests %}
+						  <option value="{{dest.ngo_name}}">Address: {{dest.user.address}}</option>
+						  {% endfor %}
+
+					  </datalist>
+					<p  style="color:green; text-align:center;"> "If you select none, your donation will be given to the NGO who are in need  "</p>
+				</div>
+
+				
+				
+				<label class="label-input100" for="quantity">Quantity<p  style="color:red" >*</p></label>
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<input id="quantity" class="input100" type="text" name="quantity" placeholder="enter quantity" onkeyup="quant(this.value)" />
+					<span id="messages" class="focus-input100" style="color:green"> </span>
+				</div>
+				
+					   <div id="mode">
+					  
+					   <label for="pickup" class="label-input100">Choose mode:<p  style="color:red" >*</p></label>
+					   <div class="label-input100">
+					   <input type="radio" name="mode" id="pickup" value="pickup" onclick="radio()"/>
+					   <label for="pickup" >pickup</label>
+					   <input type="radio" name="mode" id="doorstep" value="doorstep" onclick="radio1()"/>
+					   <label for="doorstep" >doorstep</label>
+					   </div>
+					  </div>
+					<div id="time">
+						    <label  class="label-input100" for="sector">select convenient time:<p  style="color:red" >*</p></label>
+							 <select id="time1" name="time" class="label-input100"  >
+												 <option value="9:00am-11:00am"> 9:00am-11:00am </option>
+												 <option value="2:00pm-4:00pm"> 2:00pm-4:00pm </option>
+												 <option value="7:00-9:00am"> 7:00-9:00am </option>
+							</select><br/> <br/>
+					</div>    
+								
+				  
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn">
+						Submit
+					</button>
+				</div>
+			</form>
+
+			<div class="contact100-more flex-col-c-m" style="background-image: url('{% static '3sectors/images/bg-01.jpg' %}');">
+			
+			   <h2 style="color:#20B2AA"> Donate Now </h2></br></br>
+				<div class="flex-w size1 p-b-47">
+					<div class="txt1 p-r-25">
+						<span class="lnr lnr-map-marker"></span>
+					</div>
+
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							Address
+						</span>
+
+						<span class="txt2">
+							SCSIT,DAVV ,Indore
+						</span>
+					</div>
+				</div>
+
+				<div class="dis-flex size1 p-b-47">
+					<div class="txt1 p-r-25">
+						<span class="lnr lnr-phone-handset"></span>
+					</div>
+
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							call us
+						</span>
+
+						<span class="txt3">
+							+91 76075 86862
+						</span>
+					</div>
+				</div>
+
+				<div class="dis-flex size1 p-b-47">
+					<div class="txt1 p-r-25">
+						<span class="lnr lnr-envelope"></span>
+					</div>
+
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							For Any Query
+						</span>
+
+						<span class="txt3">
+							shubhamjha.hunk@gmail.com
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+	<div>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+</div>
+</body>
+</html>

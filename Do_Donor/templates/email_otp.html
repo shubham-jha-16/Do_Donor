@@ -1,0 +1,30 @@
+{% load static %}
+<html>
+  <head>
+   <title>verification</title>
+
+  <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+  </head>
+ <body  style="
+
+	background-color:#008B8B">
+<div class="login-page">
+  <div class="form">
+   <h2>Forget password!!</h2>
+  
+    <form class="login-form" autocomplete="off" action="email_otp" method="post" >
+         {% csrf_token %}
+	   <p>OTP will be send to your email</p>
+      <input type="email" id="r1" name="email" placeholder="enter email" required/>
+      
+      <button>Get OTP</button>
+      
+    </form>
+  </div>
+</div>
+
+</body>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+</html>

@@ -1,0 +1,71 @@
+{% load notifications_tags %}
+{% load static notifications_tags %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>message</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'notification/main.css' %}">
+ <!--  <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+   <script>
+       function my_special_notification_callback(data) {
+    for (var i=0; i < data.unread_list.length; i++) {
+        msg = data.unread_list[i];
+        //alert(msg);
+    }
+}
+   </script> -->
+
+
+
+
+</head>
+<body>
+    {% for message in messages %}
+       <script>alert({{ message }});</script>
+    {% endfor %}
+ <div class="box">
+
+   <h1 style=" text-align:center; font-size: 40px ;  ">&#128231;</h1>
+
+   <br><br>
+     <label><b>Title </b> : {{noti.verb}} </label><br>
+     <label><b>Sender </b>: {{noti.actor}}</label><br>
+     <label><b>Sender mobile no. </b>: {{u.mobile}}</label><br>
+     <label><b>Sender email </b>: {{u.email}}</label><br>
+     <label><b>Requirement of </b> : {{data.sector}}</label><br>
+     <label><b>Location </b> : {{data.location}}</label><br>
+     <label><b>Description </b>: {{data.message}}</label><br>
+     <label><b>Date & Time </b>: {{noti.timestamp}} </label><br>
+     <label><b>Request Status </b>:
+     {% if data.verified %}
+      verified
+     {% else %}
+      Not verified
+     {% endif %}
+     </label><br>
+    {% if user.is_authenticated and user.type == "ngo" %}
+     <form method="post" action="interest">
+         {% csrf_token %}
+      <input type="hidden" name="me" value={{request.user.id}}>
+      <input type="hidden" name="reciever" value={{noti.request_id}}>
+
+     <label >Are you donating ?(Ignore if already filled)</label><br>
+
+     <input type="radio"  name="interest" value="Yes">
+     <label >Yes</label><br>
+     <input type="radio"  name="interest" value="No">
+     <label >No</label><br>
+      <input type="submit"></input>
+     </form>
+     {% else %}
+     <div  class="anchor">
+     <input type="hidden" name="request_id" value={{data.id}}>
+     <a  href="{{data.sector}}">Donate now</a>
+     </div>
+     {% endif %}
+
+ </div>
+
+</body>
+</html>

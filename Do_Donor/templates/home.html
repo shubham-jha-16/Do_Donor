@@ -1,0 +1,325 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <title>RAISE_DONATION</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <link rel="stylesheet" href="fonts/ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="fonts/fontawesome/css/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+  </head>
+
+
+  <body>
+   {% if user.is_authenticated and user.type == "ngo"  %}
+   <script>
+
+     window.location="ngo/ngopannel"
+
+   </script>
+  {% else %}
+    
+    <header role="banner">
+      <div class="top-bar">
+        <div class="container">
+          <div class="row">
+           
+            <div class="col-6 text-right d-sm-flex d-flex">
+              <d class="ml-auto">
+               {% if user.is_authenticated  %}
+
+                 <a href="" class="cta-btn" style="background:none; color: white">hey! {{user.username}} &#128400;</a>
+                 <a href="account/logout" class="cta-btn">Logout</a>
+
+               {% else %}
+                 <a href="account/login" class="cta-btn">Login</a>
+				 <a href="account/register" class="cta-btn">Register</a>
+               {% endif %}
+              </d>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="/">RAISE_DONATION</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarsExample05">
+            <ul class="navbar-nav ml-auto pl-lg-5 pl-0">
+              <li class="nav-item">
+                <a class="nav-link active" href="/"> 	&#x1F3E0; Home</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{% static 'services.html' %}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Donate us</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                  {% if user.is_authenticated and user.type == "donor" %}
+                  <a class="dropdown-item"  href="donation/Clothes" >Your clothes</a>
+                  <a class="dropdown-item"  href="donation/Food" >Extra Food</a>
+                   <a class="dropdown-item"  href="donation/Books" >Books</a>
+                  <a class="dropdown-item" href="donation/charity">For charity</a>
+                  {% else %}
+                  <a class="dropdown-item" href="account/login">Your clothes</a>
+                  <a class="dropdown-item" href="account/login">Extra Food</a>
+                  <a class="dropdown-item" href="account/login">books</a>
+                  <a class="dropdown-item" href="account/login">For charity</a>
+                  {% endif %}
+
+                </div>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#success">Success Stories</a>
+              </li>
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{% static 'services.html' %}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                  <a class="dropdown-item" href="about_ngo">Our NGO's</a>
+                  <a class="dropdown-item" href="{% static 'adoption.html' %}">Site</a>
+
+                </div>
+
+              </li>
+              {% if user.is_authenticated and user.type == "donor" %}
+                <li class="nav-item">
+                <a class="nav-link" href="account/profile">Profile &#128104;</a>
+              </li>
+              {% else %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NGO section</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                  <a class="dropdown-item" href="ngo/ngo">Register</a>
+                  <a class="dropdown-item" href="ngo/nlogin">Login</a>
+
+                </div>
+
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <a class="nav-link" href="contact">Contact</a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- END header -->
+
+    <section class="home-slider owl-carousel" >
+       {% for dest in dests %}
+	<div class="slider-item dark" style="background-image: url('{{dest.img.url}}');" id="h1">
+
+        <div class="container">
+          <div class="row slider-text align-items-center">
+            <div class="col-md-6 col-sm-12 element-animate">
+
+              <h1 id="i1">{{dest.title}}</h1>
+              <p>{{dest.des}}</p>
+              {% if dest.id == 1 and user.is_authenticated  %}
+              <p><a href="donation/charity" class="btn btn-primary">{{dest.b_text}}</a></p>
+              {% elif dest.id == 2 and user.is_authenticated %}
+              <p><a href="donation/Clothes" class="btn btn-primary">{{dest.b_text}}</a></p>
+              {% elif dest.id == 3 and user.is_authenticated %}
+              <p><a href="donation/Food" class="btn btn-primary">{{dest.b_text}}</a></p>
+              {% elif dest.id == 4 and user.is_authenticated %}
+              <p><a href="donation/Books" class="btn btn-primary">{{dest.b_text}}</a></p>
+              {% elif dest.id == 5  %}
+                 {%if user.type == "donor" %}
+                   <p><a href="account/logout"  onclick="someFunction();" class="btn btn-primary">{{dest.b_text}}</a></p>
+
+                 {% else %}
+                   <p><a href="ngo/ngo " class="btn btn-primary">{{dest.b_text}}</a></p>
+                 {% endif %}
+              {% elif dest.id == 6 and user.is_authenticated %}
+              <p><a href="donation/charity" class="btn btn-primary">{{dest.b_text}}</a></p>
+              {% else %}
+              <p><a href="account/login" class="btn btn-primary">{{dest.b_text}}</a></p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+     </div>
+      {% endfor %}
+
+	</section>
+
+
+        <!-- noticifation -->
+<div class="news blue">
+  <span>Latest News</span>
+     <span class="text1" >
+        <marquee>
+            <ul id="ticker01">
+                {% for dest in news %}
+                  {% if user.is_authenticated and user.type == "donor" %}
+                     <li><span>{{dest.date}}</span><a href="donation/{{dest.sector}}" style="color:rgb(0, 139, 139)">Requirement of {{dest.sector}} (<label>{{dest.message}}</label>) at {{dest.location}},Indore</a></li></br></br>
+                  {% else %}
+                     <li><span>{{dest.date}}</span><a href="account/login" onclick="function1();" style="color:rgb(0, 139, 139)">Requirement of {{dest.sector}} (<label>{{dest.message}}</label>) at {{dest.location}},Indore</a></li></br></br>
+                  {% endif %}
+                {% endfor %}
+
+		    </ul>
+        </marquee>
+    </span>
+</div>
+ <!-- end noticifation -->
+
+
+
+
+
+
+    <section class="section bg-light">
+      <div class="container" id="success">
+        <div class="row justify-content-center mb-5 element-animate">
+          <div class="col-md-8 text-center">
+            <h2 class="text-uppercase heading mb-4">Our Achievements till now</h2>
+            <p class="mb-5 lead">Words are powerful; words are motivators; words are wise advice. Words, when combined in a meaningful scheme, form phrases which we term as quotes, and we all draw some amount of that much-needed guts to do things that are magnanimous. Amongst the many things which we border as magnanimity, charity is towards the top of the list.</p>
+
+          </div>
+        </div>
+        <div class="row element-animate">
+          <div class="major-caousel js-carousel-1 owl-carousel">
+            <div >
+              <div class="media d-block media-custom text-left" id="s1">
+                  <a href="adoption-single.html"><img src="{% static 'css/food.jpg' %}" alt="Image Placeholder" class="img-fluid" width="500" height="600"></a>
+
+
+                <div class="media-body">
+                    <h3 class="mt-0 text-black"><i>Meal served:</i> <b> {{food}} </b> </h3>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="media d-block media-custom text-left" id="s2">
+                  <a href="adoption-single.html"><img src="{% static 'css/clothes.png' %}" width="500" height="600" alt="Image Placeholder" class="img-fluid"></a>
+
+                <div class="media-body">
+                    <h3 class="mt-0 text-black"><i>Total no. of clothes donated:</i> <b> {{clothes}} </b> </h3>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="media d-block media-custom text-left" id="s3">
+                  <a href="adoption-single.html"><img src="{% static 'css/books.png' %}" alt="Image Placeholder" class="img-fluid"></a>
+
+                <div class="media-body">
+                    <h3 class="mt-0 text-black"><i>Total no. of books donated:</i> <b>{{books}}</b> </h3>
+                </div>
+              </div>
+            </div>
+              <div>
+              <div class="media d-block media-custom text-left" id="s4">
+                  <a href="adoption-single.html"><img src="{% static 'css/fund.png' %}" alt="Image Placeholder" class="img-fluid" ></a>
+
+                <div class="media-body">
+                    <h3 class="mt-0 text-black"><i>Total fund raised:</i> <b>₹ {{amount}}</b></h3>
+                </div>
+              </div>
+            </div>
+              <div>
+              <div class="media d-block media-custom text-left" id="s5">
+                  <a href="adoption-single.html"><img src="{% static 'css/ngo.png' %}" alt="Image Placeholder" class="img-fluid"></a>
+
+                <div class="media-body">
+                    <h3 class="mt-0 text-black"><i>Total no. of NGOs:</i><b> {{ngo}}</b></h3>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <!-- END slider -->
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+	<div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+
+
+ <!-- request -->
+         <!-- request section -->
+  {% if user.is_authenticated and user.type == "donor" %}
+     <div class="contain" id="i1">
+  <form id="contact" action="account/user_request" method="post">
+       {% csrf_token %}
+    <h3>Request us</h3>
+    <h4>request us today, and we will go for it </h4>
+
+
+    <fieldset>
+     <p style="color:black">request for</p>
+          <select name="sector" required>
+            <option selected value=""  selected></option>
+            <option value="Food" >food</option>
+            <option value="Clothes">clothes</option>
+            <option value="Books">books</option>
+
+          </select>
+    </fieldset>
+    <fieldset>
+      <input placeholder="Location" type="text" name="location" tabindex="4" required>
+    </fieldset>
+      <fieldset>
+      <input type="text" tabindex="4" value="Indore" disabled >
+    </fieldset>
+    <fieldset>
+      <textarea placeholder="Type your Message Here...." tabindex="5" name="message" required></textarea>
+    </fieldset>
+
+    <fieldset>
+      <button name="submit" type="submit" onclick="function2();" id="contact-submit" data-submit="...Sending">Submit</button>
+    </fieldset>
+
+  </form>
+
+</div>
+    {% endif %}
+    <!-- request section ends -->
+
+
+
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+         function someFunction()
+           {
+             alert('You have been logged out, now you can register as a ngo');
+
+           }
+         function function1()
+           {
+             alert('Login required');
+
+           }
+
+    </script>
+   {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+  {% endif %}
+  </body>
+</html>

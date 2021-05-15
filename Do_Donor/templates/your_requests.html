@@ -1,0 +1,42 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'notification/main.css' %}">
+    <script>
+      function removes(i)
+        {
+           var xhttp = new XMLHttpRequest();
+           xhttp.onreadystatechange = function()
+           {
+              if (this.readyState == 4 && this.status == 200)
+              {
+                    location.reload(true);
+              }
+           };
+           alert(i);
+           xhttp.open("POST", "delete", true);
+           xhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+           xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+           xhttp.send("id="+i);
+        }
+     </script>
+ </head>
+
+<body>
+   <div class="box">
+       <h1 style="text-align:center ; color:#DC143C;">&#128214;Manage Your Requests&#128214;</h1>
+        <ol>
+    {% csrf_token %}
+    {% for i in request %}
+            <li><label  style="color:#008B8B;">Request for {{i.sector}} at {{i.location}} {{i.date}}  </label>  <button style="position:absolute; transition: .5s ease; left: 80%; background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;" onclick="removes({{i.id}})">remove</button>   </li>
+
+    {% endfor %}
+   </ol>
+   </div>
+</body>
+
+</html>

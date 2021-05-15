@@ -1,0 +1,112 @@
+{% load notifications_tags %}
+{% load static notifications_tags %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>notification</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'notification/main.css' %}">
+ <!--  <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+   <script>
+       function my_special_notification_callback(data) {
+    for (var i=0; i < data.unread_list.length; i++) {
+        msg = data.unread_list[i];
+        //alert(msg);
+    }
+}
+   </script> -->
+    <script type="text/javascript">
+        function mark()
+        {
+           var xhttp = new XMLHttpRequest();
+           xhttp.onreadystatechange = function()
+           {
+              if (this.readyState == 4 && this.status == 200)
+              {
+                    location.reload(true);
+              }
+           };
+           xhttp.open("POST", "markAll", true);
+           xhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+           xhttp.send();
+        }
+        function removes(i)
+        {
+           var xhttp = new XMLHttpRequest();
+           xhttp.onreadystatechange = function()
+           {
+              if (this.readyState == 4 && this.status == 200)
+              {
+                    location.reload(true);
+              }
+           };
+           alert(i);
+           xhttp.open("POST", "remove", true);
+           xhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+           xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+           xhttp.send("noti="+i);
+        }
+        function removeAll()
+        {
+           var xhttp = new XMLHttpRequest();
+           xhttp.onreadystatechange = function()
+           {
+              if (this.readyState == 4 && this.status == 200)
+              {
+                    location.reload(true);
+              }
+           };
+           xhttp.open("POST", "removeAll", true);
+           xhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+           xhttp.send();
+        }
+    </script>
+
+</head>
+<body>
+ <div class="box">
+   <h1 style="text-align:center">Notifications</h1>
+   <button class="b1" onclick="mark()">mark all messages as read</button>
+   <button class="b2" onclick="removeAll()" style="align:right">remove all notification</button>
+   <br><br>
+   {% notifications_unread as unread_count %}
+   {% if unread_count %}
+    You have <strong>{{ unread_count }}</strong> unread notifications. <br/>
+   {% endif %}
+
+   <h3 style="color:red">New (unread messages)</h3>
+   <ol>
+    {% csrf_token %}
+    {% for i in notice %}
+      <li> <a href="mark?noti={{i.id}} ">{{i.verb}}</a> {{i.timestamp}}   <button onclick="removes({{i.id}}) ">remove</button>   </li>
+    {% empty %}
+       <p> No new message found</p>
+    {% endfor %}
+   </ol>
+
+   <h3 style="color:purple">Old (read messages)</h3>
+   <ol>
+    {% csrf_token %}
+    {% for i in read %}
+      <li> <a href="mark?noti={{i.id}} ">{{i.verb}}</a> {{i.timestamp}} &nbsp; &nbsp; &nbsp; &nbsp; <button onclick="removes({{i.id}}) ">remove</button></li>
+    {% empty %}
+       <p>old messages not found</p>
+    {% endfor %}
+   </ol>
+
+
+ <!--  <p id="para">hello     {{ notice }}</p>
+   {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge,my_special_notification_callback' fetch=20 refresh_period=500 %}
+
+   {% live_notify_badge %}
+   {% live_notify_list  %} -->
+
+
+ </div>
+
+
+
+
+
+</body>
+</html>

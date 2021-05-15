@@ -1,0 +1,124 @@
+{% load static %}
+<html>
+<head>
+   <title>ngo</title>
+   <link rel="stylesheet" href="{% static 'rngo/style.css' %}">
+</head>
+
+<body >
+
+ <div class="signupBox">
+
+	<h2>Register as a NGO</h2>
+
+	<form  action="notp" method="post" enctype="multipart/form-data" onsubmit=" return Validate();">
+				{% csrf_token %}
+	    <div class="c1">
+		<p>NGO Name</p>
+		<input type="text" name="ngo_name" id="m1" placeholder="Enter Name" required>
+		<p>Registration no.</p>
+		<input type="number" name="r_no" id="m2" placeholder="Enter reg no." required>
+		<p>Email</p>
+		<input type="email" name="email" placeholder="Enter Email" required>
+		<p>Username</p>
+		<input type="text" name="username" id="m3" placeholder="Enter username" required>
+		<p>Password</p>
+		<input type="password" name="password" id="m4" placeholder="******" required>
+		<p>Confirm Password</p>
+		<input type="password" name="cpassword" id="m5" placeholder="******" required>
+		<p>Name</p>
+		<input type="text"   name="name" id="m6" placeholder="enter your name" required>
+		<p>Mobile no.</p>
+		<input type="number" name="mobile" id="m7"  placeholder="enter mobile no." required><br>
+
+		</div>
+		<div class="c2">
+			<p>Address</p>
+		<input type="text" name="address"  placeholder="enter address" required><br>
+		<p>Zip</p>
+		<input type="number" name="zip" id="m8" placeholder="enter zip code"  required><br>
+		<p>City</p>
+		<input type="text" name="city"  value="Indore" disabled><br>
+		<p>upload an image</p><br>
+        <input type="file"  name="image" ><br><br>
+			    <p>Select sector</p><br>
+					  <input type="checkbox" id="b1" name="sector" value="Food">
+					  <label for="book" style="color:white"> Food</label><br><br>
+					  <input type="checkbox" id="b2" name="sector" value="Clothes">
+			          <label for="book" style="color:white">Clothes</label><br><br>
+					  <input type="checkbox" id="b3" name="sector" value="Books">
+					  <label for="book" style="color:white"> Books</label><br><br>
+
+		</div>
+
+		<div class="c3">
+		<p>Description</p>
+        <textarea id="w3mission" name="desc" rows="8" cols="50" required></textarea>
+		<input type="submit" name="" value="Register"><br><br>
+		<p  style="color:white">Already Registered? <a href="file:///C:/Users/HPP-PC/Desktop/MINOR/login%20page/login.html"> LOG IN</a>
+		</div>
+
+	</form>
+</div>
+<div>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+</div>
+</body>
+<script>
+
+    function Validate() {
+	   var c = /^[a-zA-Z]+$/;
+	   var a = document.getElementById("m1").value;
+	   var b = document.getElementById("m2");
+	   if(a.match(c))
+	      true ;
+		  else
+		    {
+			  alert("Enter a valid NGO name");
+			  return false ;
+			}
+	   if (b.value.length != 8) {
+            alert("Registration no. is not valid, must be 8 characters!!");
+            return false;
+          }
+       var username = document.getElementById('m3');
+        if ((username.value.length < 4) || (username.value.length > 15))
+            {
+            alert("username must be 4 to 15 Character");
+            return false;
+            }
+
+        var password = document.getElementById("m4").value;
+        var confirm_Password = document.getElementById("m5").value;
+        if (password != confirm_Password) {
+            alert("Passwords do not match.");
+            return false;
+        }
+        var n = document.getElementById("m6").value;
+          if(n.match(c))
+	        true ;
+		  else
+		    {
+			  alert("Enter a valid  name");
+			  return false ;
+			}
+		var mobile = document.getElementById('m7');
+
+        if (mobile.value.length != 10) {
+            alert("Mobile no. is not valid!!");
+            return false;
+          }
+        var z = document.getElementById('m8');
+
+        if (z.value.length != 6) {
+            alert("Zip is not valid!!");
+            return false;
+          }
+		alert("good");
+        return true;
+
+    }
+   </script>
+</html>

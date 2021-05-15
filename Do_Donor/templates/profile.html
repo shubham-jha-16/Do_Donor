@@ -1,0 +1,266 @@
+{% load static %}
+{% load notifications_tags %}
+
+<html lang="en">
+  <head>
+    <title>User Pannel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+    <link rel="stylesheet" href="{% static 'ngopannel/css/bootstrap.css' %}">
+     <link rel="stylesheet" href="{% static 'ngopannel/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'ngopannel/css/owl.carousel.min.css' %}">
+
+
+
+    <link rel="stylesheet" href="{% static 'ngopannel/fonts/flaticon/font/flaticon.css' %}">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="{% static 'ngopannel/css/profile_style.css' %}">
+  </head>
+
+  <body>
+
+
+    <header role="banner">
+      <div class="top-bar">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-6 text-right d-sm-flex d-flex">
+              <d class="ml-auto">
+                <a href="#" class="cta-btn">hey!! {{user.username}}</a>
+                <a href="logout" class="cta-btn">Logout</a>
+
+              </d>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">RAISE_DONATION</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarsExample05">
+            <ul class="navbar-nav ml-auto pl-lg-5 pl-0">
+              <li class="nav-item">
+                <a class="nav-link active" href="index.html">Home</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="services.html" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Donate us</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                  <a class="dropdown-item" href="Clothes">Your clothes</a>
+                  <a class="dropdown-item" href="Food">Extra Food</a>
+                    <a class="dropdown-item" href="Books">Books</a>
+                  <a class="dropdown-item" href="charity">For charity</a>
+                </div>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="button"  href="user_edit">Edit Details </a>
+              </li>
+
+                <li class="nav-item">
+                <a class="nav-link"   href="reward">&#127942; Your Reward</a>
+              </li>
+                <li class="nav-item">
+                <a class="nav-link" id="button"  href="noti"  >
+
+                    <span style="font-size:27px">&#128276;</span>
+                    {% notifications_unread as unread_count %}
+                    {% if unread_count %}
+                     <span class="badge" style="margin-right:5px ;"><strong>{{ unread_count }}</strong></span>
+                    {% endif %}
+                </a>
+                </li>
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="services.html" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                  <a class="dropdown-item" href="#i2">Your past Donation</a>
+                  <a class="dropdown-item" href="/about_ngo">Our NGO's</a>
+                  <a class="dropdown-item" href="adoption.html">Site</a>
+
+                </div>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact</a>
+              </li>
+
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- END header -->
+
+       <img src="{% static 'ngopannel/logo.jpg' %}" alt="Portrait of Mr. Roboto" class="profile-image">
+   <div class="profile">
+        name : {{request.user.name}}<br>
+        username : {{user.username}}<br>
+		email      : {{user.email}}<br>
+		address    : {{user.address}}<br>
+		Mobile no. : {{user.mobile}}<br>
+   </div>
+    <div class="Admin">
+
+
+            <a href="#i1" class="cta-btn">Request us</a><br><br>
+
+            <a href="your_request" class="cta-btn">Your requests</a><br><br>
+     </div>
+
+
+
+
+    <section class="section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 element-animate">
+          <div class="col-md-8 text-center">
+            <h2 class="text-uppercase heading mb-4">Your Contribution till now</h2>
+
+
+          </div>
+        </div>
+        <div class="row element-animate">
+          <div class="major-caousel js-carousel-1 owl-carousel">
+            <div >
+              <div class="media d-block media-custom text-left" id="s1">
+                  <a href="adoption-single.html"><img src="{% static 'css/food.jpg' %}" alt="Image Placeholder" class="img-fluid" width="500" height="600"></a>
+
+
+                <div class="media-body">
+                  <h3 class="mt-0 text-black">Meal served: {{food}} </h3>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="media d-block media-custom text-left" id="s2">
+                  <a href="adoption-single.html"><img src="{% static 'css/clothes.png' %}" width="500" height="600" alt="Image Placeholder" class="img-fluid"></a>
+
+                <div class="media-body">
+                  <h3 class="mt-0 text-black">Total no. of clothes: {{clothes}}</h3>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="media d-block media-custom text-left" id="s3">
+                  <a href="adoption-single.html"><img src="{% static 'css/books.png' %}" alt="Image Placeholder" class="img-fluid"></a>
+
+                <div class="media-body">
+                  <h3 class="mt-0 text-black">Total no. of books donated: {{books}} </h3>
+                </div>
+              </div>
+            </div>
+              <div>
+              <div class="media d-block media-custom text-left" id="s4">
+                  <a href="adoption-single.html"><img src="{% static 'css/fund.png' %}" alt="Image Placeholder" class="img-fluid" ></a>
+
+                <div class="media-body">
+                  <h3 class="mt-0 text-black">Total fund raised: rs {{amount}} </h3>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+          <!-- END slider -->
+        </div>
+      </div>
+    </section>
+
+    <!-- request section -->
+
+     <!-- request section -->
+     <div class="contain" id="i1">
+  <form id="contact" action="user_request" method="post">
+       {% csrf_token %}
+    <h3>Request us</h3>
+    <h4>request us today, and we will go for it </h4>
+
+
+    <fieldset>
+     <p style="color:black">request for</p>
+          <select name="sector" required>
+            <option selected value=""  selected></option>
+            <option value="Food" >food</option>
+            <option value="Clothes">clothes</option>
+            <option value="Books">books</option>
+
+          </select>
+    </fieldset>
+    <fieldset>
+      <input placeholder="Location" type="text" name="location" tabindex="4" required>
+    </fieldset>
+      <fieldset>
+      <input type="text" tabindex="4" value="Indore" disabled >
+    </fieldset>
+    <fieldset>
+      <textarea placeholder="Type your Message Here...." tabindex="5" name="message" required></textarea>
+    </fieldset>
+    <fieldset>
+      <button name="submit" onclick="function2();" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+    </fieldset>
+  </form>
+
+</div>
+    <!-- donation history -->
+  <div id="i2">
+    <article>
+    <h2>Past Donations</h2>
+
+    <table class="vitamins">
+        <thead>
+            <tr>
+                <th>Donation Type</th>
+                <th>Quantity/Amount</th>
+                <th>Date</th>
+                <th>NGO</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for dest in donation %}
+
+            <tr>
+
+                <td>{{dest.sector}}</td>
+                <td>{{dest.quantity}}/{{dest.amount}}</td>
+                <td>{{dest.date}}</td>
+                <td>{{dest.ngo}}</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+    </article>
+  </div>
+   <!--donation history ends-->
+
+
+
+
+
+
+	<div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+
+    <script src="{% static 'ngopannel/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'ngopannel/js/popper.min.js' %}"></script>
+    <script src="{% static 'ngopannel/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'ngopannel/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'ngopannel/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'ngopannel/js/main.js' %}"></script>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+  </body>
+</html>

@@ -1,0 +1,65 @@
+{% load static %}
+<html>
+  <head>
+   <title>Login</title>
+
+  <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+       <script>
+
+    function values()
+        {
+
+          document.getElementById("fp").value = "user" ;
+          var v =  document.getElementById("fp").value ;
+          alert(v);
+          }
+    function check()
+      {
+
+          var e = document.getElementById("c1").value  ;
+          var p = document.getElementById("c2").value  ;
+          if (e == ""){
+            alert("please enter an email");
+            }
+          if (p == ""){
+            alert("please enter a password");
+            }
+
+      }
+ </script>
+  </head>
+ <body
+   style="
+
+	background-color:#008B8B"
+
+  >
+ {% if user.is_authenticated  %}
+   <script>
+
+     window.location="/"
+
+   </script>
+ {% else %}
+<div class="login-page">
+  <div class="form">
+   <h2>Login as a Donor</h2>
+
+    <form class="login-form" action="login" method="post">
+	   {% csrf_token %}
+      <input type="email" id="c1" placeholder="email"  name="email" />
+      <input type="password" id="c2" placeholder="password" name="passwords" />
+      <button onclick="check()">login</button>
+      <p class="message">Not registered? <a href="register">Create an account</a></p>
+      <input type="submit" name="fp" id="fp"  value="Forget Password?" onclick="values()"  formaction="forgot_password">
+    </form>
+  </div>
+</div>
+<div>
+    {% for message in messages %}
+       <script>alert("{{ message }}");</script>
+    {% endfor %}
+</div>
+{% endif %}
+</body>
+</html>

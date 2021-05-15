@@ -1,0 +1,38 @@
+{% load static %}
+<html>
+  <head>
+   <title>Certificate</title>
+
+  <link rel="stylesheet" href="{% static 'reward/certificate_style.css' %}">
+
+  </head>
+ <body>
+   <div class="gold" id="gold">
+       <h1><i>{{request.user.name}}</i></h1>
+    </div>
+   <div class="silver" id="silver">
+       <h1><i>{{request.user.name}}</i></h1>
+    </div>
+   <div class="bronze" id="bronze">
+       <h1><i>{{request.user.name}}</i></h1>
+   </div>
+   
+  
+    
+	   
+
+	    <button class="print"  onclick="javascript:window.print();" id="cmd">Print</button>
+      
+      
+    
+  
+
+
+</body>
+ <script>
+        var mode = document.getElementById("{{data}}");
+        mode.style.display="block";
+
+
+  </script>
+</html>
